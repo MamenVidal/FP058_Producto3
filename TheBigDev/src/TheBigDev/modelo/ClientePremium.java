@@ -2,8 +2,8 @@ package TheBigDev.modelo;
 
 public class ClientePremium extends Cliente {
 
-    public ClientePremium(String nombre, String domicilio, String nif, String email) {
-        super(nombre, domicilio, nif, email);
+    public ClientePremium(String email, String nif, String nombre, String domicilio) {
+        super(email, nif, nombre, domicilio);
     }
 
     public String tipoCliente() {

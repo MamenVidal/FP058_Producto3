@@ -11,4 +11,13 @@ public class ListaArticulos extends Lista<Articulo> {
         }
         return null;
     }
+    public Articulo existeCodigoArticulo(String codigo) {
+        for (int i = 0; i < this.lista.size(); i++) {
+            Articulo a = this.lista.get(i);
+            if (a.getCodigo().equals(codigo)) {
+                return a;
+            }
+        }
+        return null;
+    }
 }

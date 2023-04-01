@@ -1,22 +1,23 @@
 package TheBigDev.modelo;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Pedido {
     private int numero;
     private Cliente cliente;
     private Articulo articulo;
     private int cantidad;
-    private LocalDate fechaHora;
+    private LocalDateTime fechaHora;
     private Boolean enviado;
 
-    public Pedido(int numero, Cliente cliente, Articulo articulo, int cantidad, LocalDate fechaHora) {
+    public Pedido(int numero, Cliente cliente, Articulo articulo, int cantidad, LocalDateTime fechaHora, Boolean enviado) {
         this.numero = numero;
         this.cliente = cliente;
         this.articulo = articulo;
         this.cantidad = cantidad;
         this.fechaHora = fechaHora;
-        this.enviado = false;
+        this.enviado = enviado;
     }
 
     public int getNumero() {
@@ -51,11 +52,11 @@ public class Pedido {
         this.cantidad = cantidad;
     }
 
-    public LocalDate getFechaHora() {
+    public LocalDateTime getFechaHora() {
         return fechaHora;
     }
 
-    public void setFechaHora(LocalDate fechaHora) {
+    public void setFechaHora(LocalDateTime fechaHora) {
         this.fechaHora = fechaHora;
     }
 
@@ -84,10 +85,10 @@ public class Pedido {
     public String toString() {
         return "Pedido{" +
                 "numero=" + numero +
-                ", fechaHora=" + fechaHora +
                 ", cliente=" + cliente +
                 ", articulo=" + articulo +
                 ", cantidad=" + cantidad +
+                ", fechaHora=" + fechaHora +
                 ", enviado=" + enviado +
                 ", precioEnvio=" + precioEnvio() +
                 ", precioTotal=" + precioTotal() +

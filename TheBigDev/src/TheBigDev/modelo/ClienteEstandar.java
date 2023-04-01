@@ -1,8 +1,8 @@
 package TheBigDev.modelo;
 
 public class ClienteEstandar extends Cliente {
-    public ClienteEstandar(String nombre, String domicilio, String nif, String email) {
-        super(nombre, domicilio, nif, email);
+    public ClienteEstandar(String email, String nif, String nombre, String domicilio) {
+        super(email, nif, nombre, domicilio);
     }
 
     public String tipoCliente() {

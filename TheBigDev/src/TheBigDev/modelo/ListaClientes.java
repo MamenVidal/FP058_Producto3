@@ -10,4 +10,13 @@ public class ListaClientes extends Lista<Cliente> {
         }
         return null;
     }
+    public Cliente existeEmailCliente(String email) {
+        for (int i = 0; i < this.lista.size(); i++) {
+            Cliente c = this.lista.get(i);
+            if (c.getEmail().equals(email)) {
+                return c;
+            }
+        }
+        return null;
+    }
 }
