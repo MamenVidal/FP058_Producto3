@@ -11,4 +11,13 @@ public class Datos {
         listaPedidos = new ListaPedidos();
     }
     // TO-BE-DONE
+    public ListaArticulos getListaArticulos() {
+        return listaArticulos;
+    }
+    public ListaClientes getListaClientes() {
+        return listaClientes;
+    }
+    public ListaPedidos getListaPedidos() {
+        return listaPedidos;
+    }
 }
