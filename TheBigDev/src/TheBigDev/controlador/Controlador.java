@@ -177,6 +177,10 @@ public class Controlador {
                 System.out.println(ANSI_RED_BACKGROUND+"ERROR: no existe pedido con número: "+numero+ANSI_RESET);
                 return;
             }
+            if( pedido.pedidoEnviado() ) {
+                System.out.println(ANSI_RED_BACKGROUND+"ERROR: pedido ya enviado: "+numero+ANSI_RESET);
+                return;
+            }
             LocalDateTime pedidoDate = pedido.getFechaHora();
             LocalDateTime now = LocalDateTime.now();
             // si la fecha actual es mayor que la fecha del pedido + 2 days
