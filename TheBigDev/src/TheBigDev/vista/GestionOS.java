@@ -2,12 +2,14 @@ package TheBigDev.vista;
 
 import TheBigDev.controlador.Controlador;
 
+import java.util.Locale;
 import java.util.Scanner;
 
 public class GestionOS {
 
     private final Controlador controlador;
-    Scanner teclado = new Scanner(System.in);
+    // añadimos el locale US para asegurar el mismo funcionamiento en todos los entornos que se ejecute, por ejemplo al introducir decimales
+    Scanner teclado = new Scanner(System.in).useLocale(Locale.US);
 
     public GestionOS() {
         controlador = new Controlador();
