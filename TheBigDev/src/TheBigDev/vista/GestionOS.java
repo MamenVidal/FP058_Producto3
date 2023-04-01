@@ -115,14 +115,19 @@ public class GestionOS {
     public void vistaAnadirArticulo() {
         System.out.println("Inserte codigo producto a crear");
         String codigo = teclado.next();
+        teclado.nextLine();
         System.out.println("Inserte descripcion");
         String descripcion = teclado.next();
+        teclado.nextLine();
         System.out.println("Inserte precioVenta (ej: 1050.32)");
         float precioVenta = teclado.nextFloat();
+        teclado.nextLine();
         System.out.println("Inserte gastoEnvio (ej: 5.50)");
         float gastoEnvio = teclado.nextFloat();
+        teclado.nextLine();
         System.out.println("Inserte tiempo preparación para el envio (en minutos, ej: 2)");
         int tiempo = teclado.nextInt();
+        teclado.nextLine();
         controlador.addArticulo(codigo,descripcion,precioVenta,gastoEnvio,tiempo);
     }
     public void vistaMostrarArticulos() {
@@ -133,14 +138,19 @@ public class GestionOS {
         System.out.println("Inserte email");
         String email = teclado.next();
         if( controlador.esEmail(email) ) {
+            teclado.nextLine();
             System.out.println("Inserte nif");
             String nif = teclado.next();
+            teclado.nextLine();
             System.out.println("Inserte nombre");
             String nombre = teclado.next();
+            teclado.nextLine();
             System.out.println("Inserte domicilio");
             String domicilio = teclado.next();
+            teclado.nextLine();
             System.out.println("¿Es premium? (true = Premium, false = Estándar)");
             Boolean premium = teclado.nextBoolean();
+            teclado.nextLine();
             System.out.println(premium);
             controlador.addCliente(email,nif,nombre,domicilio, premium);
         }
@@ -158,11 +168,13 @@ public class GestionOS {
     public void vistaAnadirPedido() {
         System.out.println("Inserte número pedido");
         Integer numero = teclado.nextInt();
+        teclado.nextLine();
         if( controlador.existeNumeroPedido(numero) ) {
             return;
         }
         System.out.println("Inserte email cliente para asignar a pedido");
         String email = teclado.next();
+        teclado.nextLine();
         if( !controlador.esEmail(email) ) {
             return;
         }
@@ -171,43 +183,55 @@ public class GestionOS {
         }
         System.out.println("Inserte codigo articulo para asignar a pedido");
         String codigo = teclado.next();
+        teclado.nextLine();
         if( !controlador.existeCodigoArticulo(codigo) ) {
             vistaAnadirArticuloPedido(codigo);
         }
         System.out.println("Inserte cantidad");
         Integer cantidad = teclado.nextInt();
+        teclado.nextLine();
         System.out.println("¿Esta enviado? (true = Sí, false = No)");
         Boolean enviado = teclado.nextBoolean();
+        teclado.nextLine();
         controlador.addPedido(numero,email,codigo,cantidad,enviado);
     }
     public void vistaAnadirClientePedido(String email) {
         System.out.println("==== Creamos cliente");
         System.out.println("Inserte nif");
         String nif = teclado.next();
+        teclado.nextLine();
         System.out.println("Inserte nombre");
         String nombre = teclado.next();
+        teclado.nextLine();
         System.out.println("Inserte domicilio");
         String domicilio = teclado.next();
+        teclado.nextLine();
         System.out.println("¿Es premium? (true = Premium, false = Estándar)");
         Boolean premium = teclado.nextBoolean();
         System.out.println(premium);
+        teclado.nextLine();
         controlador.addCliente(email,nif,nombre,domicilio, premium);
     }
     public void vistaAnadirArticuloPedido(String codigo) {
         System.out.println("==== Creamos articulo");
         System.out.println("Inserte descripcion");
         String descripcion = teclado.next();
+        teclado.nextLine();
         System.out.println("Inserte precioVenta (ej: 1050.32)");
         float precioVenta = teclado.nextFloat();
+        teclado.nextLine();
         System.out.println("Inserte gastoEnvio (ej: 5.50)");
         float gastoEnvio = teclado.nextFloat();
+        teclado.nextLine();
         System.out.println("Inserte tiempo preparación para el envio (en minutos, ej: 2)");
         int tiempo = teclado.nextInt();
+        teclado.nextLine();
         controlador.addArticulo(codigo,descripcion,precioVenta,gastoEnvio,tiempo);
     }
     public void vistaEliminarPedido() {
         System.out.println("Inserte número pedido a eliminar");
         Integer numero = teclado.nextInt();
+        teclado.nextLine();
         controlador.eliminarPedido(numero);
     }
     public void vistaMostrarPedidosPendientesEnvio() {
@@ -222,6 +246,7 @@ public class GestionOS {
         String resp;
         System.out.println("Elige una opción ("+textoOpciones+"):");
         resp = teclado.next();
+        teclado.nextLine();
         if (resp.isEmpty()) {
             resp = " ";
         }
