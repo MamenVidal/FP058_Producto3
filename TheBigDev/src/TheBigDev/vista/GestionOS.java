@@ -117,8 +117,7 @@ public class GestionOS {
         String codigo = teclado.next();
         teclado.nextLine();
         System.out.println("Inserte descripcion");
-        String descripcion = teclado.next();
-        teclado.nextLine();
+        String descripcion = teclado.nextLine();
         System.out.println("Inserte precioVenta (ej: 1050.32)");
         float precioVenta = teclado.nextFloat();
         teclado.nextLine();
@@ -143,11 +142,9 @@ public class GestionOS {
             String nif = teclado.next();
             teclado.nextLine();
             System.out.println("Inserte nombre");
-            String nombre = teclado.next();
-            teclado.nextLine();
+            String nombre = teclado.nextLine();
             System.out.println("Inserte domicilio");
-            String domicilio = teclado.next();
-            teclado.nextLine();
+            String domicilio = teclado.nextLine();
             System.out.println("¿Es premium? (true = Premium, false = Estándar)");
             Boolean premium = teclado.nextBoolean();
             teclado.nextLine();
@@ -201,11 +198,9 @@ public class GestionOS {
         String nif = teclado.next();
         teclado.nextLine();
         System.out.println("Inserte nombre");
-        String nombre = teclado.next();
-        teclado.nextLine();
+        String nombre = teclado.nextLine();
         System.out.println("Inserte domicilio");
-        String domicilio = teclado.next();
-        teclado.nextLine();
+        String domicilio = teclado.nextLine();
         System.out.println("¿Es premium? (true = Premium, false = Estándar)");
         Boolean premium = teclado.nextBoolean();
         System.out.println(premium);
@@ -215,7 +210,7 @@ public class GestionOS {
     public void vistaAnadirArticuloPedido(String codigo) {
         System.out.println("==== Creamos articulo");
         System.out.println("Inserte descripcion");
-        String descripcion = teclado.next();
+        String descripcion = teclado.nextLine();
         teclado.nextLine();
         System.out.println("Inserte precioVenta (ej: 1050.32)");
         float precioVenta = teclado.nextFloat();
