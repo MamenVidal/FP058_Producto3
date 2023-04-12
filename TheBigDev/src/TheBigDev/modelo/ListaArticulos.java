@@ -1,13 +1,13 @@
 package TheBigDev.modelo;
 
-import TheBigDev.modelo.dao.ArticuloDao;
+import TheBigDev.modelo.dao.FabricaDao;
 
 import java.util.ArrayList;
 
 public class ListaArticulos {
 
     public ArrayList<Articulo> getListaArticulos() {
-        return ArticuloDao.list();
+        return FabricaDao.creArticuloDao().list();
     }
 
     public int getSize() {
@@ -15,11 +15,11 @@ public class ListaArticulos {
     }
 
     public void add(Articulo t) {
-        ArticuloDao.insert(t);
+        FabricaDao.creArticuloDao().insert(t);
     }
 
     public void borrar(Articulo t) {
-        ArticuloDao.delete(t);
+        FabricaDao.creArticuloDao().delete(t);
     }
 
     public Articulo getAt(int position) {
@@ -43,7 +43,8 @@ public class ListaArticulos {
         }
         return null;
     }
+
     public static Articulo existeCodigoArticulo(String codigo) {
-        return ArticuloDao.read(codigo);
+        return FabricaDao.creArticuloDao().read(codigo);
     }
 }

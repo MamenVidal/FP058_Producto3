@@ -1,6 +1,5 @@
 package TheBigDev.modelo;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class Pedido {
@@ -11,7 +10,8 @@ public class Pedido {
     private LocalDateTime fechaHora;
     private Boolean enviado;
 
-    public Pedido(int numero, Cliente cliente, Articulo articulo, int cantidad, LocalDateTime fechaHora, Boolean enviado) {
+    public Pedido(int numero, Cliente cliente, Articulo articulo, int cantidad, LocalDateTime fechaHora,
+            Boolean enviado) {
         this.numero = numero;
         this.cliente = cliente;
         this.articulo = articulo;
@@ -73,12 +73,15 @@ public class Pedido {
     }
 
     public float precioEnvio() {
-        /* los gastos de envio son la cantidad de producto por el coste de envio unitario por el porcentaje a cobrar reducido el descuento según cliente */
-        return ( articulo.getGastoEnvio() * (float)cantidad ) * ( (100 - cliente.descuentoEnv()) / 100 );
+        /*
+         * los gastos de envio son la cantidad de producto por el coste de envio
+         * unitario por el porcentaje a cobrar reducido el descuento según cliente
+         */
+        return (articulo.getGastoEnvio() * (float) cantidad) * ((100 - cliente.descuentoEnv()) / 100);
     }
 
     public float precioTotal() {
-        return (float)cantidad * articulo.getPrecioVenta() + precioEnvio();
+        return (float) cantidad * articulo.getPrecioVenta() + precioEnvio();
     }
 
     @Override

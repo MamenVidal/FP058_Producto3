@@ -1,13 +1,13 @@
 package TheBigDev.modelo;
 
-import TheBigDev.modelo.dao.PedidoDao;
+import TheBigDev.modelo.dao.FabricaDao;
 
 import java.util.ArrayList;
 
 public class ListaPedidos {
 
     public ArrayList<Pedido> getListaPedidos() {
-        return PedidoDao.list();
+        return FabricaDao.crePedidoDao().list();
     }
 
     public int getSize() {
@@ -15,11 +15,11 @@ public class ListaPedidos {
     }
 
     public void add(Pedido t) {
-        PedidoDao.insert(t);
+        FabricaDao.crePedidoDao().insert(t);
     }
 
     public void borrar(Pedido t) {
-        PedidoDao.delete(t);
+        FabricaDao.crePedidoDao().delete(t);
     }
 
     public Pedido getAt(int position) {
@@ -35,6 +35,6 @@ public class ListaPedidos {
     }
 
     public Pedido existeNumeroPedido(Integer numero) {
-        return PedidoDao.read(numero);
+        return FabricaDao.crePedidoDao().read(numero);
     }
 }
