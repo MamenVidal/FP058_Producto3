@@ -10,7 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class ClientesDao {
+public class ClientesDao implements DaoInterface<Cliente, String> {
 
     private static String TABLE_NAME = "clientes";
 
@@ -18,12 +18,13 @@ public class ClientesDao {
         return TheBigDevConnection.getConnection();
     }
 
-    public static void insert(Cliente cliente) {
+    public void insert(Cliente cliente) {
         Connection conn = getConnection();
-        if( conn != null ) {
+        if (conn != null) {
             try {
                 // template sql insert
-                String query = "INSERT INTO $tableName (email, nif, nombre, domicilio, tipoCliente, calcAnual, descuentoEnv) VALUES (?,?,?,?,?,?,?);".replace("$tableName",TABLE_NAME);
+                String query = "INSERT INTO $tableName (email, nif, nombre, domicilio, tipoCliente, calcAnual, descuentoEnv) VALUES (?,?,?,?,?,?,?);"
+                        .replace("$tableName", TABLE_NAME);
                 // insert tablename from variable
                 PreparedStatement stmt = conn.prepareStatement(query);
                 stmt.setString(1, cliente.getEmail());
@@ -47,12 +48,13 @@ public class ClientesDao {
         }
     }
 
-    public static void update(Cliente cliente) {
+    public void update(Cliente cliente) {
         Connection conn = getConnection();
-        if( conn != null ) {
+        if (conn != null) {
             try {
                 // template sql update
-                String query = "UPDATE $tableName SET nif = ?, nombre = ?, domicilio = ?, tipoCliente = ?, calcAnual = ?, descuentoEnv = ? WHERE email = ?;".replace("$tableName",TABLE_NAME);
+                String query = "UPDATE $tableName SET nif = ?, nombre = ?, domicilio = ?, tipoCliente = ?, calcAnual = ?, descuentoEnv = ? WHERE email = ?;"
+                        .replace("$tableName", TABLE_NAME);
                 // set variables
                 PreparedStatement stmt = conn.prepareStatement(query);
                 stmt.setString(1, cliente.getNif());
@@ -74,15 +76,15 @@ public class ClientesDao {
                 }
             }
         }
-        //"update users set name = ?,email= ?, country =? where id = ?;";
+        // "update users set name = ?,email= ?, country =? where id = ?;";
     }
 
-    public static void delete(Cliente cliente) {
+    public void delete(Cliente cliente) {
         Connection conn = getConnection();
-        if( conn != null ) {
+        if (conn != null) {
             try {
                 // template sql update
-                String query = "DELETE FROM $tableName WHERE email = ?;".replace("$tableName",TABLE_NAME);
+                String query = "DELETE FROM $tableName WHERE email = ?;".replace("$tableName", TABLE_NAME);
                 // set variables
                 PreparedStatement stmt = conn.prepareStatement(query);
                 stmt.setString(1, cliente.getEmail());
@@ -100,12 +102,12 @@ public class ClientesDao {
         }
     }
 
-    public static Cliente read(String email) {
+    public Cliente read(String email) {
         Connection conn = getConnection();
-        if( conn != null ) {
+        if (conn != null) {
             try {
                 // template sql update
-                String query = "SELECT * FROM $tableName WHERE email = ?;".replace("$tableName",TABLE_NAME);
+                String query = "SELECT * FROM $tableName WHERE email = ?;".replace("$tableName", TABLE_NAME);
                 // set variables
                 PreparedStatement stmt = conn.prepareStatement(query);
                 stmt.setString(1, email);
@@ -125,12 +127,12 @@ public class ClientesDao {
         return null;
     }
 
-    public static ArrayList<Cliente> list() {
+    public ArrayList<Cliente> list() {
         Connection conn = getConnection();
-        if( conn != null ) {
+        if (conn != null) {
             try {
                 // template sql update
-                String query = "SELECT * FROM $tableName;".replace("$tableName",TABLE_NAME);
+                String query = "SELECT * FROM $tableName;".replace("$tableName", TABLE_NAME);
                 // set variables
                 PreparedStatement stmt = conn.prepareStatement(query);
                 // And then do an execute
@@ -149,52 +151,46 @@ public class ClientesDao {
         return null;
     }
 
-    private static ArrayList<Cliente> readRows(ResultSet rs) throws SQLException
-    {
+    private ArrayList<Cliente> readRows(ResultSet rs) throws SQLException {
         int columnCount = rs.getMetaData().getColumnCount();
         ArrayList<Cliente> rows = new ArrayList<Cliente>();
         while (rs.next()) {
             String tipoCliente = rs.getString(5);
-            if( tipoCliente.equals("premium") ) {
+            if (tipoCliente.equals("premium")) {
                 Cliente row = new ClientePremium(
                         rs.getString(1),
                         rs.getString(2),
                         rs.getString(3),
-                        rs.getString(4)
-                );
+                        rs.getString(4));
                 rows.add(row);
             } else {
                 Cliente row = new ClienteEstandar(
                         rs.getString(1),
                         rs.getString(2),
                         rs.getString(3),
-                        rs.getString(4)
-                );
+                        rs.getString(4));
                 rows.add(row);
             }
         }
         return rows;
     }
 
-    private static Cliente readRow(ResultSet rs) throws SQLException
-    {
+    private Cliente readRow(ResultSet rs) throws SQLException {
         int columnCount = rs.getMetaData().getColumnCount();
         while (rs.next()) {
-            if( rs.getString(5) == "premium" ) {
+            if (rs.getString(5) == "premium") {
                 Cliente row = new ClientePremium(
-                    rs.getString(1),
-                    rs.getString(2),
-                    rs.getString(3),
-                    rs.getString(4)
-                );
+                        rs.getString(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4));
                 return row;
             } else {
                 Cliente row = new ClienteEstandar(
-                    rs.getString(1),
-                    rs.getString(2),
-                    rs.getString(3),
-                    rs.getString(4)
-                );
+                        rs.getString(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4));
                 return row;
             }
         }

@@ -1,13 +1,13 @@
 package TheBigDev.modelo;
 
-import TheBigDev.modelo.dao.ClientesDao;
+import TheBigDev.modelo.dao.FabricaDao;
 
 import java.util.ArrayList;
 
 public class ListaClientes {
 
     public ArrayList<Cliente> getListaClientes() {
-        return ClientesDao.list();
+        return FabricaDao.creClientesDao().list();
     }
 
     public int getSize() {
@@ -15,11 +15,11 @@ public class ListaClientes {
     }
 
     public void add(Cliente t) {
-        ClientesDao.insert(t);
+        FabricaDao.creClientesDao().insert(t);
     }
 
     public void borrar(Cliente t) {
-        ClientesDao.delete(t);
+        FabricaDao.creClientesDao().delete(t);
     }
 
     public Cliente getAt(int position) {
@@ -43,7 +43,8 @@ public class ListaClientes {
         }
         return null;
     }
+
     public static Cliente existeEmailCliente(String email) {
-        return ClientesDao.read(email);
+        return FabricaDao.creClientesDao().read(email);
     }
 }

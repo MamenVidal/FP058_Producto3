@@ -1,14 +1,13 @@
 package TheBigDev.modelo.dao;
 
 import TheBigDev.modelo.Articulo;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class ArticuloDao {
+public class ArticuloDao implements DaoInterface<Articulo, String> {
 
     final static String TABLE_NAME = "articulos";
 
@@ -16,12 +15,13 @@ public class ArticuloDao {
         return TheBigDevConnection.getConnection();
     }
 
-    public static void insert(Articulo articulo) {
+    public void insert(Articulo articulo) {
         Connection conn = getConnection();
-        if( conn != null ) {
+        if (conn != null) {
             try {
                 // template sql insert
-                String query = "INSERT INTO $tableName (codigo, descripcion, precioVenta, gastoEnvio, tiempo) VALUES (?,?,?,?,?);".replace("$tableName",TABLE_NAME);
+                String query = "INSERT INTO $tableName (codigo, descripcion, precioVenta, gastoEnvio, tiempo) VALUES (?,?,?,?,?);"
+                        .replace("$tableName", TABLE_NAME);
                 // insert tablename from variable
                 PreparedStatement stmt = conn.prepareStatement(query);
                 stmt.setString(1, articulo.getCodigo());
@@ -43,12 +43,13 @@ public class ArticuloDao {
         }
     }
 
-    public static void update(Articulo articulo) {
+    public void update(Articulo articulo) {
         Connection conn = getConnection();
-        if( conn != null ) {
+        if (conn != null) {
             try {
                 // template sql update
-                String query = "UPDATE $tableName SET descripcion = ?, precioVenta = ?, gastoEnvio = ?, tiempo = ? WHERE codigo = ?;".replace("$tableName",TABLE_NAME);
+                String query = "UPDATE $tableName SET descripcion = ?, precioVenta = ?, gastoEnvio = ?, tiempo = ? WHERE codigo = ?;"
+                        .replace("$tableName", TABLE_NAME);
                 // set variables
                 PreparedStatement stmt = conn.prepareStatement(query);
                 stmt.setString(1, articulo.getDescripcion());
@@ -68,15 +69,15 @@ public class ArticuloDao {
                 }
             }
         }
-        //"update users set name = ?,email= ?, country =? where id = ?;";
+        // "update users set name = ?,email= ?, country =? where id = ?;";
     }
 
-    public static void delete(Articulo articulo) {
+    public void delete(Articulo articulo) {
         Connection conn = getConnection();
-        if( conn != null ) {
+        if (conn != null) {
             try {
                 // template sql update
-                String query = "DELETE FROM $tableName WHERE codigo = ?;".replace("$tableName",TABLE_NAME);
+                String query = "DELETE FROM $tableName WHERE codigo = ?;".replace("$tableName", TABLE_NAME);
                 // set variables
                 PreparedStatement stmt = conn.prepareStatement(query);
                 stmt.setString(1, articulo.getCodigo());
@@ -94,12 +95,12 @@ public class ArticuloDao {
         }
     }
 
-    public static Articulo read(String codigo) {
+    public Articulo read(String codigo) {
         Connection conn = getConnection();
-        if( conn != null ) {
+        if (conn != null) {
             try {
                 // template sql update
-                String query = "SELECT * FROM $tableName WHERE codigo = ?;".replace("$tableName",TABLE_NAME);
+                String query = "SELECT * FROM $tableName WHERE codigo = ?;".replace("$tableName", TABLE_NAME);
                 // set variables
                 PreparedStatement stmt = conn.prepareStatement(query);
                 stmt.setString(1, codigo);
@@ -112,8 +113,7 @@ public class ArticuloDao {
                             rs.getString(2),
                             rs.getFloat(3),
                             rs.getFloat(4),
-                            rs.getInt(5)
-                    );
+                            rs.getInt(5));
                     return row;
                 }
                 return null;
@@ -130,12 +130,12 @@ public class ArticuloDao {
         return null;
     }
 
-    public static ArrayList<Articulo> list() {
+    public ArrayList<Articulo> list() {
         Connection conn = getConnection();
-        if( conn != null ) {
+        if (conn != null) {
             try {
                 // template sql update
-                String query = "SELECT * FROM $tableName;".replace("$tableName",TABLE_NAME);
+                String query = "SELECT * FROM $tableName;".replace("$tableName", TABLE_NAME);
                 // set variables
                 PreparedStatement stmt = conn.prepareStatement(query);
                 // And then do an execute
@@ -148,8 +148,7 @@ public class ArticuloDao {
                             rs.getString(2),
                             rs.getFloat(3),
                             rs.getFloat(4),
-                            rs.getInt(5)
-                    );
+                            rs.getInt(5));
                     rows.add(row);
                 }
                 return rows;

@@ -7,7 +7,7 @@ import TheBigDev.modelo.Pedido;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class PedidoDao {
+public class PedidoDao implements DaoInterface<Pedido, Integer> {
 
     private static String TABLE_NAME = "pedidos";
 
@@ -15,19 +15,20 @@ public class PedidoDao {
         return TheBigDevConnection.getConnection();
     }
 
-    public static void insert(Pedido pedido) {
+    public void insert(Pedido pedido) {
         Connection conn = getConnection();
-        if( conn != null ) {
+        if (conn != null) {
             try {
                 // template sql insert
-                String query = "INSERT INTO $tableName (numero, cliente, articulo, cantidad, fechaHora, enviado) VALUES (?,?,?,?,?,?);".replace("$tableName",TABLE_NAME);
+                String query = "INSERT INTO $tableName (numero, cliente, articulo, cantidad, fechaHora, enviado) VALUES (?,?,?,?,?,?);"
+                        .replace("$tableName", TABLE_NAME);
                 // insert tablename from variable
                 PreparedStatement stmt = conn.prepareStatement(query);
                 stmt.setInt(1, pedido.getNumero());
                 stmt.setString(2, pedido.getCliente().getEmail());
                 stmt.setString(3, pedido.getArticulo().getCodigo());
                 stmt.setInt(4, pedido.getCantidad());
-                stmt.setTimestamp(5, Timestamp.valueOf(pedido.getFechaHora()) );
+                stmt.setTimestamp(5, Timestamp.valueOf(pedido.getFechaHora()));
                 stmt.setBoolean(6, pedido.getEnviado());
                 // And then do an executeUpdate
                 stmt.executeUpdate();
@@ -43,18 +44,19 @@ public class PedidoDao {
         }
     }
 
-    public static void update(Pedido pedido) {
+    public void update(Pedido pedido) {
         Connection conn = getConnection();
-        if( conn != null ) {
+        if (conn != null) {
             try {
                 // template sql update
-                String query = "UPDATE $tableName SET cliente = ?, articulo = ?, cantidad = ?, fechaHora = ?, enviado = ? WHERE numero = ?;".replace("$tableName",TABLE_NAME);
+                String query = "UPDATE $tableName SET cliente = ?, articulo = ?, cantidad = ?, fechaHora = ?, enviado = ? WHERE numero = ?;"
+                        .replace("$tableName", TABLE_NAME);
                 // set variables
                 PreparedStatement stmt = conn.prepareStatement(query);
                 stmt.setString(1, pedido.getCliente().getEmail());
                 stmt.setString(2, pedido.getArticulo().getCodigo());
                 stmt.setInt(3, pedido.getCantidad());
-                stmt.setTimestamp(4, Timestamp.valueOf(pedido.getFechaHora()) );
+                stmt.setTimestamp(4, Timestamp.valueOf(pedido.getFechaHora()));
                 stmt.setBoolean(5, pedido.getEnviado());
                 stmt.setInt(6, pedido.getNumero());
                 // And then do an executeUpdate
@@ -69,15 +71,15 @@ public class PedidoDao {
                 }
             }
         }
-        //"update users set name = ?,email= ?, country =? where id = ?;";
+        // "update users set name = ?,email= ?, country =? where id = ?;";
     }
 
-    public static void delete(Pedido pedido) {
+    public void delete(Pedido pedido) {
         Connection conn = getConnection();
-        if( conn != null ) {
+        if (conn != null) {
             try {
                 // template sql update
-                String query = "DELETE FROM $tableName WHERE numero = ?;".replace("$tableName",TABLE_NAME);
+                String query = "DELETE FROM $tableName WHERE numero = ?;".replace("$tableName", TABLE_NAME);
                 // set variables
                 PreparedStatement stmt = conn.prepareStatement(query);
                 stmt.setInt(1, pedido.getNumero());
@@ -95,12 +97,12 @@ public class PedidoDao {
         }
     }
 
-    public static Pedido read(Integer numero) {
+    public Pedido read(Integer numero) {
         Connection conn = getConnection();
-        if( conn != null ) {
+        if (conn != null) {
             try {
                 // template sql update
-                String query = "SELECT * FROM $tableName WHERE numero = ?;".replace("$tableName",TABLE_NAME);
+                String query = "SELECT * FROM $tableName WHERE numero = ?;".replace("$tableName", TABLE_NAME);
                 // set variables
                 PreparedStatement stmt = conn.prepareStatement(query);
                 stmt.setInt(1, numero);
@@ -114,8 +116,7 @@ public class PedidoDao {
                             ListaArticulos.existeCodigoArticulo(rs.getString(3)),
                             rs.getInt(4),
                             rs.getTimestamp(5).toLocalDateTime(),
-                            rs.getBoolean(6)
-                    );
+                            rs.getBoolean(6));
                     return row;
                 }
                 return null;
@@ -132,12 +133,12 @@ public class PedidoDao {
         return null;
     }
 
-    public static ArrayList<Pedido> list() {
+    public ArrayList<Pedido> list() {
         Connection conn = getConnection();
-        if( conn != null ) {
+        if (conn != null) {
             try {
                 // template sql update
-                String query = "SELECT * FROM $tableName;".replace("$tableName",TABLE_NAME);
+                String query = "SELECT * FROM $tableName;".replace("$tableName", TABLE_NAME);
                 // set variables
                 PreparedStatement stmt = conn.prepareStatement(query);
                 // And then do an execute
@@ -151,8 +152,7 @@ public class PedidoDao {
                             ListaArticulos.existeCodigoArticulo(rs.getString(3)),
                             rs.getInt(4),
                             rs.getTimestamp(5).toLocalDateTime(),
-                            rs.getBoolean(6)
-                    );
+                            rs.getBoolean(6));
                     rows.add(row);
                 }
                 return rows;
