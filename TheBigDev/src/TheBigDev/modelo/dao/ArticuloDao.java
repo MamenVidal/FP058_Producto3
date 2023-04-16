@@ -19,6 +19,9 @@ public class ArticuloDao implements DaoInterface<Articulo, String> {
         Connection conn = getConnection();
         if (conn != null) {
             try {
+                // Deshabilitar el modo de confirmación automática
+                conn.setAutoCommit(false);
+
                 // template sql insert
                 String query = "INSERT INTO $tableName (codigo, descripcion, precioVenta, gastoEnvio, tiempo) VALUES (?,?,?,?,?);"
                         .replace("$tableName", TABLE_NAME);
@@ -31,10 +34,21 @@ public class ArticuloDao implements DaoInterface<Articulo, String> {
                 stmt.setInt(5, articulo.getTiempo());
                 // And then do an executeUpdate
                 stmt.executeUpdate();
+
+                // Realizar el commit
+                conn.commit();
             } catch (Exception e) {
+                try {
+                    // Realizar el rollback en caso de errores
+                    conn.rollback();
+                } catch (SQLException rollbackEx) {
+                    rollbackEx.printStackTrace();
+                }
                 throw new RuntimeException(e);
             } finally {
                 try {
+                    // Reestablecer el modo de confirmación automática antes de cerrar la conexión
+                    conn.setAutoCommit(true);
                     conn.close();
                 } catch (SQLException e) {
                     e.printStackTrace();
@@ -47,6 +61,9 @@ public class ArticuloDao implements DaoInterface<Articulo, String> {
         Connection conn = getConnection();
         if (conn != null) {
             try {
+                // Deshabilitar el modo de confirmación automática
+                conn.setAutoCommit(false);
+
                 // template sql update
                 String query = "UPDATE $tableName SET descripcion = ?, precioVenta = ?, gastoEnvio = ?, tiempo = ? WHERE codigo = ?;"
                         .replace("$tableName", TABLE_NAME);
@@ -59,17 +76,27 @@ public class ArticuloDao implements DaoInterface<Articulo, String> {
                 stmt.setString(5, articulo.getCodigo());
                 // And then do an executeUpdate
                 stmt.executeUpdate();
+
+                // Realizar el commit
+                conn.commit();
             } catch (Exception e) {
+                try {
+                    // Realizar el rollback en caso de errores
+                    conn.rollback();
+                } catch (SQLException rollbackEx) {
+                    rollbackEx.printStackTrace();
+                }
                 throw new RuntimeException(e);
             } finally {
                 try {
+                    // Reestablecer el modo de confirmación automática antes de cerrar la conexión
+                    conn.setAutoCommit(true);
                     conn.close();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
             }
         }
-        // "update users set name = ?,email= ?, country =? where id = ?;";
     }
 
     public void delete(Articulo articulo) {
