@@ -15,6 +15,8 @@ public class PedidoDao implements DaoInterface<Pedido, Integer> {
         return TheBigDevConnection.getConnection();
     }
 
+    // antigua funcion con sql directo a la tabla
+    /*
     public void insert(Pedido pedido) {
         Connection conn = getConnection();
         if (conn != null) {
@@ -43,6 +45,36 @@ public class PedidoDao implements DaoInterface<Pedido, Integer> {
             }
         }
     }
+    */
+
+    // nueva función usando el procedimiento almacenado
+    public void insert(Pedido pedido) {
+        Connection conn = getConnection();
+        if (conn != null) {
+            try {
+                // Cambiar a una llamada al procedimiento almacenado
+                String query = "{CALL InsertarPedido(?,?,?,?,?,?)}";
+                PreparedStatement stmt = conn.prepareCall(query);
+                stmt.setInt(1, pedido.getNumero());
+                stmt.setString(2, pedido.getCliente().getEmail());
+                stmt.setString(3, pedido.getArticulo().getCodigo());
+                stmt.setInt(4, pedido.getCantidad());
+                stmt.setTimestamp(5, Timestamp.valueOf(pedido.getFechaHora()));
+                stmt.setBoolean(6, pedido.getEnviado());
+                // And then do an executeUpdate
+                stmt.executeUpdate();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            } finally {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
 
     public void update(Pedido pedido) {
         Connection conn = getConnection();

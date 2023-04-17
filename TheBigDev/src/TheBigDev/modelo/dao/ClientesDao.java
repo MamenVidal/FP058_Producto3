@@ -22,6 +22,9 @@ public class ClientesDao implements DaoInterface<Cliente, String> {
         Connection conn = getConnection();
         if (conn != null) {
             try {
+                // Deshabilitar el modo de confirmación automática
+                conn.setAutoCommit(false);
+
                 // template sql insert
                 String query = "INSERT INTO $tableName (email, nif, nombre, domicilio, tipoCliente, calcAnual, descuentoEnv) VALUES (?,?,?,?,?,?,?);"
                         .replace("$tableName", TABLE_NAME);
@@ -36,10 +39,21 @@ public class ClientesDao implements DaoInterface<Cliente, String> {
                 stmt.setFloat(7, cliente.descuentoEnv());
                 // And then do an executeUpdate
                 stmt.executeUpdate();
+
+                // Realizar el commit
+                conn.commit();
             } catch (Exception e) {
+                try {
+                    // Realizar el rollback en caso de errores
+                    conn.rollback();
+                } catch (SQLException rollbackEx) {
+                    rollbackEx.printStackTrace();
+                }
                 throw new RuntimeException(e);
             } finally {
                 try {
+                    // Reestablecer el modo de confirmación automática antes de cerrar la conexión
+                    conn.setAutoCommit(true);
                     conn.close();
                 } catch (SQLException e) {
                     e.printStackTrace();
@@ -47,11 +61,13 @@ public class ClientesDao implements DaoInterface<Cliente, String> {
             }
         }
     }
-
     public void update(Cliente cliente) {
         Connection conn = getConnection();
         if (conn != null) {
             try {
+                // Deshabilitar el modo de confirmación automática
+                conn.setAutoCommit(false);
+
                 // template sql update
                 String query = "UPDATE $tableName SET nif = ?, nombre = ?, domicilio = ?, tipoCliente = ?, calcAnual = ?, descuentoEnv = ? WHERE email = ?;"
                         .replace("$tableName", TABLE_NAME);
@@ -66,18 +82,29 @@ public class ClientesDao implements DaoInterface<Cliente, String> {
                 stmt.setString(7, cliente.getEmail());
                 // And then do an executeUpdate
                 stmt.executeUpdate();
+
+                // Realizar el commit
+                conn.commit();
             } catch (Exception e) {
+                try {
+                    // Realizar el rollback en caso de errores
+                    conn.rollback();
+                } catch (SQLException rollbackEx) {
+                    rollbackEx.printStackTrace();
+                }
                 throw new RuntimeException(e);
             } finally {
                 try {
+                    // Reestablecer el modo de confirmación automática antes de cerrar la conexión
+                    conn.setAutoCommit(true);
                     conn.close();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
             }
         }
-        // "update users set name = ?,email= ?, country =? where id = ?;";
     }
+
 
     public void delete(Cliente cliente) {
         Connection conn = getConnection();
